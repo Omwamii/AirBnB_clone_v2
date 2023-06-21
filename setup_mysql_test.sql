@@ -1,6 +1,6 @@
 -- script to setup MYSQL server for project
 -- create the hbnb_dev_db database
-CREATE DATABASE IF NOT EXISTS `hbnb_test_db`;
+CREATE DATABASE IF NOT EXISTS hbnb_test_db;
 
 -- create a user on localhost
 CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_test_pwd';

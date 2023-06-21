@@ -3,7 +3,7 @@
 import cmd
 import sys
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -145,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     kwargs[key] = value
         new_instance.__dict__.update(**kwargs)
-        storage.save()
+        new_instance.save()
         print(new_instance.id)
         storage.save()
 
@@ -222,21 +222,18 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        print_list = []
-
-        if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+        ln = args.split()
+        if len(ln) > 0 and ln[0] not in self.classes:
+            print("** class doesn't exist **")
         else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
-
-        print(print_list)
+            objs = list()
+            objs_dict = storage.all()
+            for obj, val in objs_dict.items():
+                if len(ln) > 0 and ln[0] == val.__class__.__name__:
+                    objs.append(val.__str__())
+                elif len(ln) == 0:
+                    objs.append(val.__str__())
+            print(objs)
 
     def help_all(self):
         """ Help information for the all command """

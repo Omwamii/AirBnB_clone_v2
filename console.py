@@ -256,7 +256,10 @@ class HBNBCommand(cmd.Cmd):
                     objs.append(val.__str__())
                 elif len(ln) == 0:
                     objs.append(val.__str__())
-            print(objs)
+            print("[", end='')
+            for obj in objs:
+                print(obj, end='')
+            print("]")
 
     def help_all(self):
         """ Help information for the all command """

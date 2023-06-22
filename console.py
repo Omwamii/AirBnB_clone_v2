@@ -228,11 +228,16 @@ class HBNBCommand(cmd.Cmd):
         else:
             objs = list()
             objs_dict = storage.all()
-            for obj, val in objs_dict.items():
+            for key, val in objs_dict.items():
+                obj_dict = dict()
+                for k, v in val.__dict__.items():
+                    if k != "_sa_instance_state":
+                        obj_dict[k] = v
+                cls_str = f"[{val.__class__.__name__}] ({val.id}) {obj_dict}"
                 if len(ln) > 0 and ln[0] == val.__class__.__name__:
-                    objs.append(val.__str__())
+                    objs.append(cls_str)
                 elif len(ln) == 0:
-                    objs.append(val.__str__())
+                    objs.append(cls_str)
             print(objs)
 
     def help_all(self):

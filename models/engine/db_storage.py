@@ -40,20 +40,8 @@ class DBStorage():
 
     def all(self, cls=None):
         """ query on the current database session (self.__session)
-        all objects depending on the class name. 
+        all objects depending on the class name.
         if cls is None query all types
-        all_objs = dict()
-        if cls is not None:
-            objects = self.__session.query(cls).all()
-        else:
-            objects = self.__session.query(State, City).all()
-            state_objects = self.__session.query(State).all()
-            city_objects = self.__session.query(City).all()
-            objects = state_objects + city_objects
-        for obj in objects:
-            key = "{}.{}".format(obj.__class__.__name__, obj.id)
-            all_objs[key] = obj
-        return all_objs
         """
         d = {}
         cls = cls if not isinstance(cls, str) else self.__clsdict.get(cls)

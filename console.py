@@ -144,14 +144,6 @@ class HBNBCommand(cmd.Cmd):
                     pass  # skip values not in the types
                 else:
                     kwargs[key] = value
-        # if new_instance.__class__.__name__ == "State":
-        #  if 'name' not in kwargs:
-        #     del new_instance
-        #    raise Exception  # if state has no name
-        # if new_instance.__class__.__name__ == "City":
-        #    if len(kwargs) == 1 and 'state_id' in kwargs:
-        #       del new_instance
-        #      raise Exception  # cant create city with only state_id
         new_instance.__dict__.update(**kwargs)
         new_instance.save()
         print(new_instance.id)
@@ -229,7 +221,7 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: destroy <className> <objectId>\n")
 
     def do_all(self, args):
-        """ Shows all objects, or all objects of a class"""
+        """ Shows all objects, or all objects of a class
         ln = args.split()
         if len(ln) > 0 and ln[0] not in self.classes:
             print("** class doesn't exist **")
@@ -251,6 +243,19 @@ class HBNBCommand(cmd.Cmd):
                     objs.append(cls_str)
                 elif len(ln) == 0:
                     objs.append(cls_str)
+            print(objs)
+        """
+        ln = args.split()
+        if len(ln) > 0 and ln[0] not in self.classes:
+            print("** class doesn't exist **")
+        else:
+            objs = list()
+            objs_dict = storage.all()
+            for obj, val in objs_dict.items():
+                if len(ln) > 0 and ln[0] == val.__class__.__name__:
+                    objs.append(val.__str__())
+                elif len(ln) == 0:
+                    objs.append(val.__str__())
             print(objs)
 
     def help_all(self):

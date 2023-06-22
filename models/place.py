@@ -10,9 +10,9 @@ from sqlalchemy.orm import backref
 STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 
 if STORAGE_TYPE == "db":
-#    class PlaceAmenity(Base):
-        """ PlaceAmenity Class """
-        """
+    #    class PlaceAmenity(Base):
+    """ PlaceAmenity Class """
+    """
         __tablename__ = 'place_amenity'
         metadata = Base.metadata
         place_id = Column(String(60),

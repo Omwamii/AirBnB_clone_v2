@@ -146,9 +146,11 @@ class HBNBCommand(cmd.Cmd):
                     kwargs[key] = value
         if new_instance.__class__.__name__ == "State":
             if 'name' not in kwargs:
+                del new_instance
                 return False  # if state has no name
         if new_instance.__class__.__name__ == "City":
             if len(kwargs) == 1 and 'state_id' in kwargs:
+                del new_instance
                 return False  # cant create city with only state_id
         new_instance.__dict__.update(**kwargs)
         new_instance.save()

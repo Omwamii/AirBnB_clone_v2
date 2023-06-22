@@ -23,6 +23,7 @@ class DBStorage():
     __clsdict = {
             "State": State,
             "City": City,
+            "User": User
             }
 
     def __init__(self):

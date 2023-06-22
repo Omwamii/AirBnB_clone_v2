@@ -222,6 +222,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class
+        """
         ln = args.split()
         if len(ln) > 0 and ln[0] not in self.classes:
             print("** class doesn't exist **")
@@ -243,21 +244,10 @@ class HBNBCommand(cmd.Cmd):
                     objs.append(cls_str)
                 elif len(ln) == 0:
                     objs.append(cls_str)
-            print(objs)
-        """
-        ln = args.split()
-        if len(ln) > 0 and ln[0] not in self.classes:
-            print("** class doesn't exist **")
-        else:
-            objs = list()
-            objs_dict = storage.all()
-            for obj, val in objs_dict.items():
-                if len(ln) > 0 and ln[0] == val.__class__.__name__:
-                    objs.append(val.__str__())
-                elif len(ln) == 0:
-                    objs.append(val.__str__())
             print("[", end='')
-            for obj in objs:
+            for index, obj in enumerate(objs):
+                if index != 0:
+                    obj = ", " + obj
                 print(obj, end='')
             print("]")
 

@@ -5,7 +5,6 @@ from fabric.api import local, put, run, env
 from datetime import datetime
 import os
 env.hosts = ['54.84.24.93', '34.224.95.244']
-env.user = 'ubuntu'
 
 
 def do_pack():
@@ -60,25 +59,25 @@ def deploy():
 
 
 def do_clean(number=0):
-    """ number: number of archives to keep:
-               0 - 1: keep most recent version of archive
-               2: keep the most recent and second most recent versions
+    """Deletes out-of-date archives of the static files.
+    Args:
+        number (Any): The number of archives to keep.
     """
-    number = int(number)
-    local_archives = int(local('ls versions/ | wc -l', capture=True))
-    if number == 0:
-        to_delete = local_archives - 1
+    archives = os.listdir('versions/')
+    archives.sort(reverse=True)
+    start = int(number)
+    if not start:
+        start += 1
+    if start < len(archives):
+        archives = archives[start:]
     else:
-        to_delete = local_archives - number
-    delete_files = local("ls -t versions/ | tail -n {} | xargs -I \
-            {{}} echo versions/{{}}".format(to_delete), capture=True)
-    local("rm -f {}".format(delete_files))
-    r_path = '/data/web_static/releases/'  # path to remote archives
-    remote_archives = run('ls {} | wc -l'.format(r_path))
-    if number == 0:
-        to_delete = remote_archives - 1  # keep only most recent version
-    else:
-        to_delete = remote_archives - number
-    delete_files = run("ls -t {} | tail -n {} | xargs -I \
-            {{}} echo {}/{{}}".format(r_path, to_delete, r_path), quiet=True)
-    run("rm -rf {}".format(delete_files))
+        archives = []
+    for archive in archives:
+        os.unlink('versions/{}'.format(archive))
+    cmd_parts = [
+        "rm -rf $(",
+        "find /data/web_static/releases/ -maxdepth 1 -type d -iregex",
+        " '/data/web_static/releases/web_static_.*'",
+        " | sort -r | tr '\\n' ' ' | cut -d ' ' -f{}-)".format(start + 1)
+    ]
+    run(''.join(cmd_parts))

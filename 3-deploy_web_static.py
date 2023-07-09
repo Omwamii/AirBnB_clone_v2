@@ -21,6 +21,7 @@ def do_pack():
         local("tar -czvf {} web_static".format(target_path))
         print("web_static packed: {} -> \
                 {}Bytes".format(target_path, os.path.getsize(target_path)))
+        return target_path
     except Exception:
         return None
 

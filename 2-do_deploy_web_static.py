@@ -37,12 +37,13 @@ def do_deploy(archive_path):
         dir_name = '/data/web_static/releases/{}/'.format(tar_dir)
         run('mkdir -p {}'.format(folder_name))
         run('tar -xzf /tmp/{} -C {}'.format(tar_file, dir_name))
-        run('rm /tmp/{}'.format(tar_file))
+        run('rm -rf /tmp/{}'.format(tar_file))
         run('mv /data/web_static/releases/{}/web_static/* \
                 {}'.format(tar_dir, dir_name))
         run('rm -rf /data/web_static/releases/{}/web_static'.format(tar_dir))
         run('rm -rf /data/web_static/current')
         run('ln -sf {} /data/web_static/current'.format(dir_name))
         print("New version deployed!")
+        return True
     except Exception:
         return False

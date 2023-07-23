@@ -9,11 +9,10 @@ import os
 def do_pack():
     """ creates a tgz archive of web_static
     """
-    # create versions directory if not existing
     try:
         now = datetime.now()
         timestamp = now.strftime("%Y%m%d%H%M%S")
-        local("mkdir -p versions")
+        local("mkdir -p versions")  # create versions if not existing
         tar_file = "web_static_{}.tgz".format(timestamp)
         target_path = "versions/{}".format(tar_file)
         # unpack file web_static contents to tar file

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-""" script to start Flask web app with 2 routes
+""" script with additional route to display c info
 """
-from flask import Flask
+from flask import Flask, escape
 
 app = Flask(__name__)
 
@@ -14,6 +14,11 @@ def hello_hbnb():
 @app.route("/hbnb", strict_slashes=False)
 def hbnb():
     return "HBNB"
+
+
+@app.route("/c/<text>", strict_slashes=False)
+def c_with_text(text):
+    return f"C {escape(text.replace('_', ' '))}"
 
 
 if __name__ == "__main__":

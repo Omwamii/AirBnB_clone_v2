@@ -21,6 +21,10 @@ def list_states(id):
     """ list all State objects if no id else State obj with the id
     """
     state_objs = storage.all(State)
+    if len(state_objs) == 0:
+        state_is_empty = True
+    else:
+        state_is_empty = False
     objs = list()
     for obj_id, obj in state_objs.items():
         if id is not None:
@@ -31,7 +35,8 @@ def list_states(id):
                 continue
         objs.append(obj)
     # if object with specific id is not found, len of list == 0
-    return render_template("9-states.html", states=objs)
+    return render_template("9-states.html", states=objs
+                           , flag=state_is_empty)
 
 
 if __name__ == "__main__":

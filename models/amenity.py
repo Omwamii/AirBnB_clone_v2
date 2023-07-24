@@ -7,6 +7,8 @@ from sqlalchemy.orm import relationship
 
 
 class Amenity(BaseModel, Base):
+    __table_args__ = (
+            {'mysql_default_charset': 'latin1'})
     __tablename__ = "amenities"
     name = Column(String(128), nullable=False)
     place_amenities = relationship("Place",

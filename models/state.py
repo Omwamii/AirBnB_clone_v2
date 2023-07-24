@@ -11,9 +11,12 @@ import models
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
+    __table_args__ = (
+            {'mysql_default_charset': 'latin1'})
     name = Column(String(128), nullable=False)
     # make rlship with city objects for automatic deletion of linked cities
-    cities = relationship('City', cascade='all, delete', backref='state')
+    cities = relationship('City', cascade='all, delete', backref='state',
+                          order_by='City.name')
 
     if env.get('HBNB_TYPE_STORAGE') != 'db':
         @property

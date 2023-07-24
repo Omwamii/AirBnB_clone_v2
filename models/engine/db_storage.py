@@ -56,7 +56,7 @@ class DBStorage():
                     )] = obj
             return (d)
         for k, cls in self.__clsdict.items():
-            for obj in self.__session.query(cls).order_by(cls.name):  # potential issue
+            for obj in self.__session.query(cls).order_by(cls.name):
                 d["{}.{}".format(cls.__name__, obj.id)] = obj
         return (d)
 

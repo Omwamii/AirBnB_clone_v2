@@ -23,6 +23,8 @@ def list_cities_by_states():
     objs = list()
     for obj_id, obj in state_objs.items():
         objs.append(obj)
+        for city in obj.cities:
+            print(city.name)
     return render_template("8-cities_by_states.html", states=objs)
 
 

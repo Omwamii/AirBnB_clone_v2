@@ -23,7 +23,10 @@ class FileStorage:
         for key, value in self.__objects.items():
             if eval(value.__class__.__name__) == cls:  # potential issue
                 cls_objs[key] = value
-        return cls_objs
+        sorted_objs = dict(sorted(cls_objs.items(),
+                                  key=lambda item: item.name))
+        # return cls_objs
+        return sorted_objs
 
     def new(self, obj):
         """Adds new object to storage dictionary"""

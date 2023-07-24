@@ -91,3 +91,5 @@ class DBStorage():
         """
         if self.__session:
             self.__session.close()
+        else:
+            pass # close on class Session?

@@ -35,8 +35,7 @@ def list_states(id):
                 continue
         objs.append(obj)
     # if object with specific id is not found, len of list == 0
-    return render_template("9-states.html", states=objs
-                           , flag=state_is_empty)
+    return render_template("9-states.html", states=objs, flag=state_is_empty)
 
 
 if __name__ == "__main__":
